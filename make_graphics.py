@@ -4,131 +4,223 @@ import pandas as pd
 from instrumento import Instrumento
 
 ins = Instrumento()
-estudiantes, trabajadores_de_bancos = ins.getData()
-poblacion = estudiantes + trabajadores_de_bancos
+estudiantes, empleados_de_bancos = ins.getData()
+poblacion = estudiantes + empleados_de_bancos
 
 tamanio_de_poblacion = len(poblacion)
 
-# Variables de habilidades blandas
-trabajo_en_equipo = []
-liderazgo = []
-manejo_de_estres = []
-buena_comunicacion = []
-puntualidad_y_responsabilidad = []
-resolucion_de_problemas = []
-proactividad = []
-respeto_a_direcencias = []
+# Variables de habilidades blandas poblacion
 
-# Tecnologias y Frecuencia de actualizacion
-fre_actualizacion_tec_conocidas = []
-fre_aprendizaje_nueva_tec = []
+############## Variables Estudiantes ##############
+
+# Variables habilidades blandas estudiantes
+
+trabajo_en_equipo_es = []
+liderazgo_es = []
+manejo_de_estres_es = []
+buena_comunicacion_es = []
+puntualidad_y_responsabilidad_es = []
+resolucion_de_problemas_es = []
+proactividad_es = []
+respeto_a_direcencias_es = []
+
+# Frecuencias
+fre_actualizacion_tec_conocidas_es = []
+fre_aprendizaje_nueva_tec_es = []
+
+############## Variables Bancos ##############
+
+# Variables habilidades blandas bancos
+
+trabajo_en_equipo_bc = []
+liderazgo_bc = []
+manejo_de_estres_bc = []
+buena_comunicacion_bc = []
+puntualidad_y_responsabilidad_bc = []
+resolucion_de_problemas_bc = []
+proactividad_bc = []
+respeto_a_direcencias_bc = []
+
+# Frecuencias
+fre_actualizacion_tec_conocidas_bc = []
+fre_aprendizaje_nueva_tec_bc = []
+
+# Colores
+colores = ["#f0325b","#3268f0","#f0cd32","#58f032","#32f0ea", "#9432f0", "#f032e0", "#f09432"]
+
+################ Datos de la población ################
 
 
-for individuo in poblacion:
-    #Habilidades blandas
-    trabajo_en_equipo.append(individuo["Trabajo en equipo"])
-    liderazgo.append(individuo["Liderazgo"])
-    manejo_de_estres.append(individuo["Manejo del estrés\xa0"])
-    buena_comunicacion.append(individuo["Buena comunicación"])
-    puntualidad_y_responsabilidad.append(individuo["Puntualidad y responsabilidad"])
-    resolucion_de_problemas.append(individuo["Resolución de problemas"])
-    proactividad.append(individuo["Proactividad"])
-    respeto_a_direcencias.append(individuo["Respeto hacia las diferentes opiniones de los demás."])
+
+################ Datos de los estudiantes ################
+
+for individuo in estudiantes:
+    trabajo_en_equipo_es.append(individuo["Trabajo en equipo"])
+    liderazgo_es.append(individuo["Liderazgo"])
+    manejo_de_estres_es.append(individuo["Manejo del estrés\xa0"])
+    buena_comunicacion_es.append(individuo["Buena comunicación"])
+    puntualidad_y_responsabilidad_es.append(individuo["Puntualidad y responsabilidad"])
+    resolucion_de_problemas_es.append(individuo["Resolución de problemas"])
+    proactividad_es.append(individuo["Proactividad"])
+    respeto_a_direcencias_es.append(individuo["Respeto hacia las diferentes opiniones de los demás."])
 
     #Tecnologias y Frecuencia de actualizacion
-    fre_actualizacion_tec_conocidas.append(individuo["De las tecnologías que usted domina ¿qué tan frecuente actualiza su conocimiento sobre estas?"])
-    fre_aprendizaje_nueva_tec.append(individuo["¿Qué tan frecuente aprende nuevas tecnologías?"])
+    fre_actualizacion_tec_conocidas_es.append(individuo["De las tecnologías que usted domina ¿qué tan frecuente actualiza su conocimiento sobre estas?"])
+    fre_aprendizaje_nueva_tec_es.append(individuo["¿Qué tan frecuente aprende nuevas tecnologías?"])
 
+################ Datos de los empleados ################
+
+for individuo in empleados_de_bancos:
+    trabajo_en_equipo_bc.append(individuo["Trabajo en equipo"])
+    liderazgo_bc.append(individuo["Liderazgo"])
+    manejo_de_estres_bc.append(individuo["Manejo del estrés\xa0"])
+    buena_comunicacion_bc.append(individuo["Buena comunicación"])
+    puntualidad_y_responsabilidad_bc.append(individuo["Puntualidad y responsabilidad"])
+    resolucion_de_problemas_bc.append(individuo["Resolución de problemas"])
+    proactividad_bc.append(individuo["Proactividad"])
+    respeto_a_direcencias_bc.append(individuo["Respeto hacia las diferentes opiniones de los demás."])
+
+    #Tecnologias y Frecuencia de actualizacion
+    fre_actualizacion_tec_conocidas_bc.append(individuo["De las tecnologías que usted domina ¿qué tan frecuente actualiza su conocimiento sobre estas?"])
+    fre_aprendizaje_nueva_tec_bc.append(individuo["¿Qué tan frecuente aprende nuevas tecnologías?"])
 
 ################ Habilidades Blandas ################
 
-trabajo_en_equipo = np.array(trabajo_en_equipo)
-liderazgo = np.array(liderazgo)
-manejo_de_estres = np.array(manejo_de_estres)
-buena_comunicacion = np.array(buena_comunicacion)
-puntualidad_y_responsabilidad = np.array(puntualidad_y_responsabilidad)
-resolucion_de_problemas = np.array(resolucion_de_problemas)
-proactividad = np.array(proactividad)
-respeto_a_direcencias = np.array(respeto_a_direcencias)
+# Estudiantes
+trabajo_en_equipo_es = np.array(trabajo_en_equipo_es)
+liderazgo_es = np.array(liderazgo_es)
+manejo_de_estres_es = np.array(manejo_de_estres_es)
+buena_comunicacion_es = np.array(buena_comunicacion_es)
+puntualidad_y_responsabilidad_es = np.array(puntualidad_y_responsabilidad_es)
+resolucion_de_problemas_es = np.array(resolucion_de_problemas_es)
+proactividad_es = np.array(proactividad_es)
+respeto_a_direcencias_es = np.array(respeto_a_direcencias_es)
+
+#empleados
+trabajo_en_equipo_bc = np.array(trabajo_en_equipo_bc)
+liderazgo_bc = np.array(liderazgo_bc)
+manejo_de_estres_bc = np.array(manejo_de_estres_bc)
+buena_comunicacion_bc = np.array(buena_comunicacion_bc)
+puntualidad_y_responsabilidad_bc = np.array(puntualidad_y_responsabilidad_bc)
+resolucion_de_problemas_bc = np.array(resolucion_de_problemas_bc)
+proactividad_bc = np.array(proactividad_bc)
+respeto_a_direcencias_bc = np.array(respeto_a_direcencias_bc)
 
 nombre_habilidades = ["Trabajo en equipo","Liderazgo","Manejo del estrés","Buena comunicación","Puntualidad y responsabilidad","Resolución de problemas","Proactividad","Respeto hacia las diferentes opiniones de los demás."]
 identificador_habilidades = ["H1","H2","H3","H4","H5","H6","H7","H8"]
-promedios_habilidades = [np.mean(trabajo_en_equipo), np.mean(liderazgo), np.mean(manejo_de_estres), np.mean(buena_comunicacion), np.mean(puntualidad_y_responsabilidad), np.mean(resolucion_de_problemas), np.mean(proactividad), np.mean(respeto_a_direcencias)]
 
-habilidades_df = pd.DataFrame({
-    "Habilidades": nombre_habilidades,
+promedios_habilidades_es = [np.mean(trabajo_en_equipo_es), np.mean(liderazgo_es), np.mean(manejo_de_estres_es), np.mean(buena_comunicacion_es), np.mean(puntualidad_y_responsabilidad_es), np.mean(resolucion_de_problemas_es), np.mean(proactividad_es), np.mean(resolucion_de_problemas_es)]
+promedios_habilidades_bc = [np.mean(trabajo_en_equipo_bc), np.mean(liderazgo_bc), np.mean(manejo_de_estres_bc), np.mean(buena_comunicacion_bc), np.mean(puntualidad_y_responsabilidad_bc), np.mean(resolucion_de_problemas_bc), np.mean(proactividad_bc), np.mean(resolucion_de_problemas_bc)]
+
+habilidades_es_df = pd.DataFrame({
+    "Habilidades": [x.replace(" ", "\n") for x in nombre_habilidades],
     "Identificador": identificador_habilidades,
-    "Promedios": promedios_habilidades
+    "Promedios": promedios_habilidades_es
     })
 
-habilidades_df_ordenadas = habilidades_df.sort_values('Promedios', ascending=False)
+habilidades_bc_df = pd.DataFrame({
+    "Habilidades": nombre_habilidades,
+    "Identificador": identificador_habilidades,
+    "Promedios": promedios_habilidades_bc
+    })
 
-plt.bar('Identificador', 'Promedios',data=habilidades_df_ordenadas)
-#plt.bar_label("Importancia de habilidades blandas.")
-plt.title("Importancia de Habilidades blandas")
+
+# Grafica estudiantes
+plt.bar('Identificador', 'Promedios',data=habilidades_es_df, color=colores)
+plt.title("Importancia de Habilidades blandas que poseen los estudiantes de Ingeniería en Sistemas\n")
 plt.xlabel("Habilidad")
 plt.ylabel("Importancia")
+plt.ylim([0,5])
 
-#plt.xticks(np.arange(len(x)), x)
-
-plt.savefig("./fig/habilidades_blandas.png", dpi=None, facecolor='w', edgecolor='w',
+plt.savefig("./fig/habilidades_blandas_es.png", dpi=None, facecolor='w', edgecolor='w',
         orientation='portrait', format=None,
-        transparent=False, bbox_inches=None, pad_inches=0.1,
+        transparent=False, bbox_inches='tight', pad_inches=0.1,
+        metadata=None)
+plt.clf()
+
+# Grafica empleados
+plt.bar('Identificador', 'Promedios',data=habilidades_bc_df, color=colores)
+plt.title("Importancia de Habilidades blandas requeridas en el sector bancario\n")
+plt.xlabel("Habilidad")
+plt.ylabel("Importancia")
+plt.ylim([0,5])
+
+plt.savefig("./fig/habilidades_blandas_bc.png", dpi=None, facecolor='w', edgecolor='w',
+        orientation='portrait', format=None,
+        transparent=False, bbox_inches='tight', pad_inches=0.1,
         metadata=None)
 plt.clf()
 
 ############## Tecnologias y Frecuencia ##############
-fre_actualizacion_tec_conocidas = np.array(fre_actualizacion_tec_conocidas)
-fre_aprendizaje_nueva_tec = np.array(fre_aprendizaje_nueva_tec)
 
-fre_act_set, frecuencia_act = np.unique(fre_actualizacion_tec_conocidas, return_counts=True)
-fre_apr_set, frecuencia_apr = np.unique(fre_aprendizaje_nueva_tec, return_counts=True)
+# Estudiantes
+fre_actualizacion_tec_conocidas_es = np.array(fre_actualizacion_tec_conocidas_es)
+fre_aprendizaje_nueva_tec_es = np.array(fre_aprendizaje_nueva_tec_es)
 
-frecuencia_act = (frecuencia_act / len(poblacion)) * 100
-frecuencia_apr = (frecuencia_apr / len(poblacion)) * 100
+fre_act_set_es, frecuencia_act_es = np.unique(fre_actualizacion_tec_conocidas_es, return_counts=True)
+fre_apr_set_es, frecuencia_apr_es = np.unique(fre_aprendizaje_nueva_tec_es, return_counts=True)
 
-fre_act_df = pd.DataFrame({
-    "Frecuencia": fre_act_set,
-    "Valor": frecuencia_act
-    })
+frecuencia_act_es = (frecuencia_act_es / len(estudiantes)) * 100
+frecuencia_apr_es = (frecuencia_apr_es / len(estudiantes)) * 100
 
-fre_apr_df = pd.DataFrame({
-    "Frecuencia": fre_apr_set,
-    "Valor": frecuencia_apr
-    })
+# Frecuencia actualización
+fig, ax = plt.subplots()
 
-fre_act_df_ordenado = fre_act_df.sort_values("Valor", ascending=False)
-fre_apr_df_ordenado = fre_apr_df.sort_values("Valor", ascending=False)
+ax.pie(frecuencia_act_es, labels=fre_act_set_es, colors=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red'], autopct='%.0f%%')
+plt.title("Frecuencia de actualización de conocimientos técnicos \n de estudiantes por egresar de Ingeniería en Sistemas \n en la UNAH")
+
+plt.savefig("./fig/actualizacion_de_conocimientos_es.png", dpi=None, facecolor='w', edgecolor='w',
+        orientation='portrait', format=None,
+        transparent=False, bbox_inches='tight', pad_inches=0.1,
+        metadata=None)
+plt.clf()
+
+# Frecuencia aprendizaje
+fig, ax = plt.subplots()
+
+ax.pie(frecuencia_apr_es, labels=fre_apr_set_es, colors=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red'], autopct='%.0f%%')
+plt.title("Frecuencia de aprendizaje de nuevos conocimientos técnicos \n de estudiantes por egresar de Ingeniería en Sistemas \n en la UNAH")
+
+plt.savefig("./fig/aprendizaje_de_conocimientos_es.png", dpi=None, facecolor='w', edgecolor='w',
+        orientation='portrait', format=None,
+        transparent=False, bbox_inches='tight', pad_inches=0.1,
+        metadata=None)
+plt.clf()
 
 
-plt.bar('Frecuencia', 'Valor',data=fre_act_df_ordenado)
-plt.title("Frecuencia de actualización de conocimientos")
-plt.xlabel("Nivel de frecuencia")
-plt.ylabel("Frecuencia en %")
-plt.ylim([0,100])
+# Bancos
+fre_actualizacion_tec_conocidas_bc = np.array(fre_actualizacion_tec_conocidas_bc)
+fre_aprendizaje_nueva_tec_bc = np.array(fre_aprendizaje_nueva_tec_bc)
 
-plt.savefig("./fig/actualizacion_de_conocimientos.png", dpi=None, facecolor='w', edgecolor='w',
+fre_act_set_bc, frecuencia_act_bc = np.unique(fre_actualizacion_tec_conocidas_bc, return_counts=True)
+fre_apr_set_bc, frecuencia_apr_bc = np.unique(fre_aprendizaje_nueva_tec_bc, return_counts=True)
+
+frecuencia_act_bc = (frecuencia_act_bc / len(empleados_de_bancos)) * 100
+frecuencia_apr_bc = (frecuencia_apr_bc / len(empleados_de_bancos)) * 100
+
+# Frecuencia actualización
+fig, ax = plt.subplots()
+
+ax.pie(frecuencia_act_bc, labels=fre_act_set_bc, colors=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red'], autopct='%.0f%%')
+plt.title("Frecuencia de actualización de conocimientos técnicos \n de empleados del sector bancario")
+
+plt.savefig("./fig/actualizacion_de_conocimientos_bc.png", dpi=None, facecolor='w', edgecolor='w',
         orientation='portrait', format=None,
         transparent=False, bbox_inches=None, pad_inches=0.1,
         metadata=None)
 plt.clf()
 
+# Frecuencia aprendizaje
+fig, ax = plt.subplots()
 
-plt.bar('Frecuencia', 'Valor',data=fre_apr_df_ordenado)
-plt.title("Frecuencia de aprendizaje de nuevos conocimientos")
-plt.xlabel("Nivel de frecuencia")
-plt.ylabel("Frecuencia en %")
-plt.ylim([0,100])
+ax.pie(frecuencia_apr_bc, labels=fre_apr_set_bc, colors=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red'], autopct='%.0f%%')
+plt.title("Frecuencia de aprendizaje de nuevos conocimientos técnicos \n de empleados del sector bancario")
 
-plt.savefig("./fig/aprendizaje_de_conocimientos.png", dpi=None, facecolor='w', edgecolor='w',
+plt.savefig("./fig/aprendizaje_de_conocimientos_bc.png", dpi=None, facecolor='w', edgecolor='w',
         orientation='portrait', format=None,
         transparent=False, bbox_inches=None, pad_inches=0.1,
         metadata=None)
 plt.clf()
-
-
-
-
 
 
 
