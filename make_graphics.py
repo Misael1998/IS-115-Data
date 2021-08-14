@@ -28,6 +28,9 @@ respeto_a_direcencias_es = []
 fre_actualizacion_tec_conocidas_es = []
 fre_aprendizaje_nueva_tec_es = []
 
+# Interes en el sector banacario
+interes_estudiates = []
+
 ############## Variables Bancos ##############
 
 # Variables habilidades blandas bancos
@@ -67,6 +70,10 @@ for individuo in estudiantes:
     #Tecnologias y Frecuencia de actualizacion
     fre_actualizacion_tec_conocidas_es.append(individuo["De las tecnologías que usted domina ¿qué tan frecuente actualiza su conocimiento sobre estas?"])
     fre_aprendizaje_nueva_tec_es.append(individuo["¿Qué tan frecuente aprende nuevas tecnologías?"])
+
+    #Interes en el sector bancario
+    interes_estudiates.append(individuo["¿Qué tanto le interesa trabajar en el sector bancario?"])
+
 
 ################ Datos de los empleados ################
 
@@ -223,9 +230,22 @@ plt.savefig("./fig/aprendizaje_de_conocimientos_bc.png", dpi=None, facecolor='w'
 plt.clf()
 
 
+############ Interes de los estudiantes en el sector banacario ############
+interes_estudiates = np.array(interes_estudiates)
+interes_set, fre_interes = np.unique(interes_estudiates, return_counts=True) 
 
+fre_interes = (fre_interes / len(estudiantes)) * 100
 
+fig, ax = plt.subplots()
+ax.pie(fre_interes, labels=interes_set, colors=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red'], autopct='%.0f%%' )
 
+plt.title("Interes de los estudiantes de trabajar en un banco")
+
+plt.savefig("./fig/interes_estudiates_trabajo_banco.png", dpi=None, facecolor='w', edgecolor='w',
+        orientation='portrait', format=None,
+        transparent=False, bbox_inches=None, pad_inches=0.1,
+        metadata=None)
+plt.clf()
 
 
 
