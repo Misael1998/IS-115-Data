@@ -78,20 +78,11 @@ plt.savefig("./fig/habilidades_blandas.png", dpi=None, facecolor='w', edgecolor=
 plt.clf()
 
 ############## Tecnologias y Frecuencia ##############
-fre_act_set = list(set(fre_actualizacion_tec_conocidas))
-fre_apr_set = list(set(fre_aprendizaje_nueva_tec))
+fre_actualizacion_tec_conocidas = np.array(fre_actualizacion_tec_conocidas)
+fre_aprendizaje_nueva_tec = np.array(fre_aprendizaje_nueva_tec)
 
-frecuencia_act = [0] * len(fre_act_set)
-frecuencia_apr = [0] * len(fre_apr_set)
-
-for frecuencia in fre_actualizacion_tec_conocidas:
-    frecuencia_act[fre_act_set.index(frecuencia)] = frecuencia_act[fre_act_set.index(frecuencia)] + 1
-
-for frecuencia in fre_aprendizaje_nueva_tec:
-    frecuencia_apr[fre_apr_set.index(frecuencia)] = frecuencia_apr[fre_apr_set.index(frecuencia)] + 1
-
-frecuencia_act = np.array(frecuencia_act)
-frecuencia_apr = np.array(frecuencia_apr)
+fre_act_set, frecuencia_act = np.unique(fre_actualizacion_tec_conocidas, return_counts=True)
+fre_apr_set, frecuencia_apr = np.unique(fre_aprendizaje_nueva_tec, return_counts=True)
 
 frecuencia_act = (frecuencia_act / len(poblacion)) * 100
 frecuencia_apr = (frecuencia_apr / len(poblacion)) * 100
@@ -124,7 +115,7 @@ plt.clf()
 
 
 plt.bar('Frecuencia', 'Valor',data=fre_apr_df_ordenado)
-plt.title("Frecuencia de aprendizaje de conocimientos")
+plt.title("Frecuencia de aprendizaje de nuevos conocimientos")
 plt.xlabel("Nivel de frecuencia")
 plt.ylabel("Frecuencia en %")
 plt.ylim([0,100])
