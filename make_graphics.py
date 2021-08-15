@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.ticker as mtick
 import pandas as pd
 from instrumento import Instrumento
 
@@ -49,6 +50,11 @@ respeto_a_direcencias_bc = []
 fre_actualizacion_tec_conocidas_bc = []
 fre_aprendizaje_nueva_tec_bc = []
 
+# Centros de estudio
+centros_de_estudio = []
+
+#############################################################################
+
 # Colores
 colores = ["#f0325b","#3268f0","#f0cd32","#58f032","#32f0ea", "#9432f0", "#f032e0", "#f09432"]
 
@@ -92,6 +98,9 @@ for individuo in empleados_de_bancos:
     #Tecnologias y Frecuencia de actualizacion
     fre_actualizacion_tec_conocidas_bc.append(individuo["De las tecnologías que usted domina ¿qué tan frecuente actualiza su conocimiento sobre estas?"])
     fre_aprendizaje_nueva_tec_bc.append(individuo["¿Qué tan frecuente aprende nuevas tecnologías?"])
+
+    #Centros de estudio
+    centros_de_estudio.append(individuo["Centro de estudio universitario en donde cursó la licenciatura en Ingeniería en Sistemas:"].upper())
 
 ################ Habilidades Blandas ################
 
@@ -254,9 +263,33 @@ plt.savefig("./fig/interes_estudiates_trabajo_banco.png", dpi=None, facecolor='w
 plt.clf()
 
 
+############ Centros de estudio de los empleados de bancos ############
+centros_de_estudio = np.array(centros_de_estudio)
+centros_set, fre_centros = np.unique(centros_de_estudio, return_counts=True)
 
+fre_centros = (fre_centros / len(empleados_de_bancos)) * 100
 
+centros_df = pd.DataFrame({
+    'Centros': centros_set,
+    'Porcentaje': fre_centros
+    })
 
+centros_df = centros_df.sort_values('Porcentaje', ascending=True)
+
+fig, ax = plt.subplots()
+
+ax.barh('Centros', 'Porcentaje', data=centros_df)
+plt.title("Universidades en las que estudiaron los empleados")
+ax.xaxis.set_major_formatter(mtick.PercentFormatter())
+
+plt.ylabel("Universidades")
+plt.xlabel("Porcentaje de empleados que estudiaron en X universidad")
+
+plt.savefig("./fig/centros_de_estudio.png", dpi=None, facecolor='w', edgecolor='w',
+        orientation='portrait', format=None,
+        transparent=False, bbox_inches='tight', pad_inches=0.1,
+        metadata=None)
+plt.clf()
 
 
 
