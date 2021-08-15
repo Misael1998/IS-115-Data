@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
+from matplotlib.font_manager import FontProperties
+from matplotlib.patches import Patch
 import pandas as pd
 from instrumento import Instrumento
 
@@ -33,6 +35,12 @@ fre_aprendizaje_nueva_tec_es = []
 interes_estudiates = []
 interes_para_trabajar = []
 
+# Adquicicion de conocimientos
+lenguajes_progra = []
+conocimientos_tecnicos_generales = []
+bases_de_datos = []
+sistemas_operativos = []
+
 ############## Variables Bancos ##############
 
 # Variables habilidades blandas bancos
@@ -55,6 +63,33 @@ centros_de_estudio = []
 
 # Bancos en los que ha trabajado
 bancos_laborados = []
+
+"""
+# Habilidades tecnicas
+lenguajes_de_programacion = []
+uso_de_librerias = []
+uso_de_frameworks = []
+desa_app_web = []
+desa_app_escritorio = []
+desa_app_movil = []
+desa_embebidos = []
+metodologias_de_desarrollo = []
+ataques_informaticos = []
+buenas_practicas_de_seguridad = []
+protocolos_de_redes = []
+conocimientos_basico_redes = []
+operaciones_en_bases = []
+administracion_bases = []
+"""
+
+# Bases de datos mas usdadas
+bases_mas_usadas = []
+
+# Sistemas operativos mas usados
+so_mas_usados = []
+
+# Lenguajes mas usados
+lenguajes_mas_usados = []
 
 #############################################################################
 
@@ -85,9 +120,17 @@ for individuo in estudiantes:
     interes_estudiates.append(individuo["¿Qué tanto le interesa trabajar en el sector bancario?"])
     interes_para_trabajar.append(individuo["Al momento de buscar empleo ¿qué le interesa más?"])
 
+    # Adquicicion de conocimientos
+    lenguajes_progra = lenguajes_progra + individuo["¿Cómo ha adquirido sus conocimientos en los lenguajes de programación preguntados anteriormente?\xa0\xa0\xa0(Puede escoger más de una opción)"].split(";")
+    conocimientos_tecnicos_generales = conocimientos_tecnicos_generales + individuo["¿Cómo ha adquirido sus conocimientos sobre los conceptos de la pregunta anterior?\xa0(Puede escoger más de una opción)"].split(";")
+    bases_de_datos = bases_de_datos + individuo["¿Cómo ha adquirido sus conocimientos en los gestores de base de datos preguntados anteriormente?\xa0\xa0(Puede escoger más de una opción)"].split(";")
+    sistemas_operativos = sistemas_operativos + individuo["¿Cómo ha adquirido sus conocimientos en los sistemas operativos de la pregunta anterior?\xa0(Puede escoger más de una opción)"].split(";")
+
 
 ################ Datos de los empleados ################
 for individuo in empleados_de_bancos:
+    #print(individuo)
+    #print()
     trabajo_en_equipo_bc.append(individuo["Trabajo en equipo"])
     liderazgo_bc.append(individuo["Liderazgo"])
     manejo_de_estres_bc.append(individuo["Manejo del estrés\xa0"])
@@ -107,7 +150,23 @@ for individuo in empleados_de_bancos:
     # Bancos en los que ha trabajados
     bancos_laborados = bancos_laborados + individuo["Entidad bancaria en la cual trabaja o ha trabajado:\xa0\xa0(Puede escoger más de una opción)"].split(";")
 
-
+"""
+    # Habilidades tecnicas
+    lenguajes_de_programacion.append([""])
+    uso_de_librerias.append([""])
+    uso_de_frameworks.append([""])
+    desa_app_web.append([""])
+    desa_app_escritorio.append([""])
+    desa_app_movil.append([""])
+    desa_embebidos.append([""])
+    metodologias_de_desarrollo.append([""])
+    ataques_informaticos.append([""])
+    buenas_practicas_de_seguridad.append([""])
+    protocolos_de_redes.append([""])
+    conocimientos_basico_redes.append([""])
+    operaciones_en_bases.append([""])
+    administracion_bases.append([""])
+"""
 
 ################ Habilidades Blandas ################
 
@@ -164,11 +223,21 @@ plt.savefig("./fig/habilidades_blandas_es.png", dpi=None, facecolor='w', edgecol
 plt.clf()
 
 # Grafica empleados
-plt.bar('Identificador', 'Promedios',data=habilidades_bc_df, color=colores)
+fig, ax = plt.subplots()
+ax.bar('Identificador', 'Promedios',data=habilidades_bc_df, color=colores)
 plt.title("Importancia de Habilidades blandas requeridas en el sector bancario\n")
 plt.xlabel("Habilidad")
 plt.ylabel("Importancia")
 plt.ylim([0,5])
+
+fontP = FontProperties()
+fontP.set_size('small')
+
+cmap = dict(zip(nombre_habilidades, colores))
+
+patches = [Patch(color=v, label=k) for k, v in cmap.items()]
+
+plt.legend(labels=nombre_habilidades, handles=patches, title='Habilidades', bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
 
 plt.savefig("./fig/habilidades_blandas_bc.png", dpi=None, facecolor='w', edgecolor='w',
         orientation='portrait', format=None,
@@ -329,6 +398,150 @@ plt.savefig("./fig/bancos_laborados.png", dpi=None, facecolor='w', edgecolor='w'
         transparent=False, bbox_inches='tight', pad_inches=0.1,
         metadata=None)
 plt.clf()
+
+############ Adquicicion de conocimientos ############
+
+lenguajes_progra = np.array(lenguajes_progra)
+conocimientos_tecnicos_generales = np.array(conocimientos_tecnicos_generales)
+bases_de_datos = np.array(bases_de_datos)
+sistemas_operativos = np.array(sistemas_operativos)
+
+lenguajes_progra_set, lenguajes_progra_count = np.unique(lenguajes_progra, return_counts=True)
+conocimientos_tecnicos_generales_set, conocimientos_tecnicos_generales_count = np.unique(conocimientos_tecnicos_generales, return_counts=True)
+bases_de_datos_set, bases_de_datos_count = np.unique(bases_de_datos, return_counts=True)
+sistemas_operativos_set, sistemas_operativos_count = np.unique(sistemas_operativos, return_counts=True)
+
+lenguajes_por = (lenguajes_progra_count / len(estudiantes)) * 100
+generales_por = (conocimientos_tecnicos_generales_count / len(estudiantes)) * 100
+bases_por = (bases_de_datos_count / len(estudiantes)) * 100
+sistemas_por = (sistemas_operativos_count / len(estudiantes)) * 100
+
+lenguajes_df = pd.DataFrame({
+    "Lenguajes_adq": lenguajes_progra_set,
+    "Porcentaje": lenguajes_por
+    })
+lenguajes_df = lenguajes_df.drop(labels=0, axis=0)
+
+generales_df = pd.DataFrame({
+    "Generales_adq": conocimientos_tecnicos_generales_set,
+    "Porcentaje": generales_por
+    })
+generales_df = generales_df.drop(labels=0, axis=0)
+
+bases_df = pd.DataFrame({
+    "Bases_adq": bases_de_datos_set,
+    "Porcentaje": bases_por
+    })
+bases_df = bases_df.drop(labels=0, axis=0)
+
+sistemas_df = pd.DataFrame({
+    "Sistemas_adq": sistemas_operativos_set,
+    "Porcentaje": sistemas_por
+    })
+sistemas_df = sistemas_df.drop(labels=0, axis=0)
+
+### Lenguajes
+fig, ax = plt.subplots()
+ax.pie(lenguajes_df['Porcentaje'].tolist(), colors=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray'], autopct='%.0f%%' )
+
+plt.title("Adquicicion de conocimientos tecnicos de lenguajes de programación")
+
+fontP = FontProperties()
+fontP.set_size('small')
+
+cmap = dict(zip(lenguajes_df['Lenguajes_adq'].tolist(), ['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray']))
+
+patches = [Patch(color=v, label=k) for k, v in cmap.items()]
+
+plt.legend(labels=lenguajes_df['Lenguajes_adq'].tolist(), handles=patches, title='Adquicicion', bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
+
+plt.savefig("./fig/lenguajes_adq.png", dpi=None, facecolor='w', edgecolor='w',
+        orientation='portrait', format=None,
+        transparent=False, bbox_inches='tight', pad_inches=0.1,
+        metadata=None)
+plt.clf()
+
+### Generales
+fig, ax = plt.subplots()
+ax.pie(generales_df['Porcentaje'].tolist(), colors=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray', 'tab:green'], autopct='%.0f%%' )
+
+plt.title("Adquicicion de conocimientos tecnicos de generales")
+
+fontP = FontProperties()
+fontP.set_size('small')
+
+cmap = dict(zip(generales_df['Generales_adq'].tolist(), ['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray', 'tab:green']))
+
+patches = [Patch(color=v, label=k) for k, v in cmap.items()]
+
+plt.legend(labels=generales_df['Generales_adq'].tolist(), handles=patches, title='Adquicicion', bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
+
+plt.savefig("./fig/generales_adq.png", dpi=None, facecolor='w', edgecolor='w',
+        orientation='portrait', format=None,
+        transparent=False, bbox_inches='tight', pad_inches=0.1,
+        metadata=None)
+plt.clf()
+
+### Bases
+fig, ax = plt.subplots()
+ax.pie(bases_df['Porcentaje'].tolist(), colors=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray'], autopct='%.0f%%' )
+
+plt.title("Adquicicion de conocimientos tecnicos de bases de datos")
+
+fontP = FontProperties()
+fontP.set_size('small')
+
+cmap = dict(zip(bases_df['Bases_adq'].tolist(), ['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray']))
+
+patches = [Patch(color=v, label=k) for k, v in cmap.items()]
+
+plt.legend(labels=bases_df['Bases_adq'].tolist(), handles=patches, title='Adquicicion', bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
+
+plt.savefig("./fig/bases_adq.png", dpi=None, facecolor='w', edgecolor='w',
+        orientation='portrait', format=None,
+        transparent=False, bbox_inches='tight', pad_inches=0.1,
+        metadata=None)
+plt.clf()
+
+### Sistemas
+fig, ax = plt.subplots()
+ax.pie(sistemas_df['Porcentaje'].tolist(), colors=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray', 'tab:green', 'tab:purple'], autopct='%.0f%%' )
+
+plt.title("Adquicicion de conocimientos tecnicos de Sistemas Operativos")
+
+fontP = FontProperties()
+fontP.set_size('small')
+
+cmap = dict(zip(sistemas_df['Sistemas_adq'].tolist(), ['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray', 'tab:green', 'tab:purple']))
+
+patches = [Patch(color=v, label=k) for k, v in cmap.items()]
+
+plt.legend(labels=sistemas_df['Sistemas_adq'].tolist(), handles=patches, title='Adquicicion', bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
+
+plt.savefig("./fig/sistemas_adq.png", dpi=None, facecolor='w', edgecolor='w',
+        orientation='portrait', format=None,
+        transparent=False, bbox_inches='tight', pad_inches=0.1,
+        metadata=None)
+plt.clf()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
