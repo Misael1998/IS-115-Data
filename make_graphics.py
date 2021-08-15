@@ -53,6 +53,9 @@ fre_aprendizaje_nueva_tec_bc = []
 # Centros de estudio
 centros_de_estudio = []
 
+# Bancos en los que ha trabajado
+bancos_laborados = []
+
 #############################################################################
 
 # Colores
@@ -84,7 +87,6 @@ for individuo in estudiantes:
 
 
 ################ Datos de los empleados ################
-
 for individuo in empleados_de_bancos:
     trabajo_en_equipo_bc.append(individuo["Trabajo en equipo"])
     liderazgo_bc.append(individuo["Liderazgo"])
@@ -101,6 +103,11 @@ for individuo in empleados_de_bancos:
 
     #Centros de estudio
     centros_de_estudio.append(individuo["Centro de estudio universitario en donde cursó la licenciatura en Ingeniería en Sistemas:"].upper())
+
+    # Bancos en los que ha trabajados
+    bancos_laborados = bancos_laborados + individuo["Entidad bancaria en la cual trabaja o ha trabajado:\xa0\xa0(Puede escoger más de una opción)"].split(";")
+
+
 
 ################ Habilidades Blandas ################
 
@@ -290,6 +297,44 @@ plt.savefig("./fig/centros_de_estudio.png", dpi=None, facecolor='w', edgecolor='
         transparent=False, bbox_inches='tight', pad_inches=0.1,
         metadata=None)
 plt.clf()
+
+
+
+############ Centros de estudio de los empleados de bancos ############
+bancos_laborados = np.array(bancos_laborados)
+bancos_set, fre_bancos = np.unique(bancos_laborados, return_counts=True)
+
+fre_bancos = (fre_bancos / len(empleados_de_bancos)) * 100
+
+bancos_df = pd.DataFrame({
+    'Bancos': bancos_set,
+    'Porcentaje': fre_bancos
+    })
+
+bancos_df.drop(labels=0, axis=0)
+
+bancos_df = bancos_df.sort_values('Porcentaje', ascending=True)
+
+fig, ax = plt.subplots()
+
+ax.barh('Bancos', 'Porcentaje', data=bancos_df)
+plt.title("Listado bancos")
+ax.xaxis.set_major_formatter(mtick.PercentFormatter())
+
+plt.ylabel("Bancos")
+plt.xlabel("Porcentaje de empleados que trabajaron en X banco")
+
+plt.savefig("./fig/bancos_laborados.png", dpi=None, facecolor='w', edgecolor='w',
+        orientation='portrait', format=None,
+        transparent=False, bbox_inches='tight', pad_inches=0.1,
+        metadata=None)
+plt.clf()
+
+
+
+
+
+
 
 
 
