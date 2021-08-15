@@ -30,6 +30,7 @@ fre_aprendizaje_nueva_tec_es = []
 
 # Interes en el sector banacario
 interes_estudiates = []
+interes_para_trabajar = []
 
 ############## Variables Bancos ##############
 
@@ -73,6 +74,7 @@ for individuo in estudiantes:
 
     #Interes en el sector bancario
     interes_estudiates.append(individuo["¿Qué tanto le interesa trabajar en el sector bancario?"])
+    interes_para_trabajar.append(individuo["Al momento de buscar empleo ¿qué le interesa más?"])
 
 
 ################ Datos de los empleados ################
@@ -232,21 +234,24 @@ plt.clf()
 
 ############ Interes de los estudiantes en el sector banacario ############
 interes_estudiates = np.array(interes_estudiates)
-interes_set, fre_interes = np.unique(interes_estudiates, return_counts=True) 
+
+
+############ Interes de los estudiantes para trabajar en el sector banacario ############
+interes_para_trabajar = np.array(interes_para_trabajar)
+interes_set, fre_interes = np.unique(interes_para_trabajar, return_counts=True) 
 
 fre_interes = (fre_interes / len(estudiantes)) * 100
 
 fig, ax = plt.subplots()
 ax.pie(fre_interes, labels=interes_set, colors=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red'], autopct='%.0f%%' )
 
-plt.title("Interes de los estudiantes de trabajar en un banco")
+plt.title("Interes de los estudiantes en un empleo")
 
 plt.savefig("./fig/interes_estudiates_trabajo_banco.png", dpi=None, facecolor='w', edgecolor='w',
         orientation='portrait', format=None,
-        transparent=False, bbox_inches=None, pad_inches=0.1,
+        transparent=False, bbox_inches='tight', pad_inches=0.1,
         metadata=None)
 plt.clf()
-
 
 
 
