@@ -6,6 +6,8 @@ from matplotlib.patches import Patch
 import pandas as pd
 from instrumento import Instrumento
 
+from make_bar import make_bar
+
 ins = Instrumento()
 estudiantes, empleados_de_bancos = ins.getData()
 poblacion = estudiantes + empleados_de_bancos
@@ -65,24 +67,6 @@ centros_de_estudio = []
 bancos_laborados = []
 areas_de_desempenio = []
 
-"""
-# Habilidades tecnicas
-lenguajes_de_programacion = []
-uso_de_librerias = []
-uso_de_frameworks = []
-desa_app_web = []
-desa_app_escritorio = []
-desa_app_movil = []
-desa_embebidos = []
-metodologias_de_desarrollo = []
-ataques_informaticos = []
-buenas_practicas_de_seguridad = []
-protocolos_de_redes = []
-conocimientos_basico_redes = []
-operaciones_en_bases = []
-administracion_bases = []
-"""
-
 # Habilidades tecnicas necesarias
 habilidades_necesarias = []
 
@@ -98,11 +82,10 @@ certificados = []
 bases_mas_usadas = []
 
 # Sistemas operativos mas usados
-so_mas_usados = []
+so_usados = []
 
 # Lenguajes mas usados
-lenguajes_mas_usados = []
-
+lenguajes_usados = []
 #############################################################################
 
 # Colores
@@ -175,24 +158,12 @@ for individuo in empleados_de_bancos:
     #Gestores de bases de datos
     gestores_bd = gestores_bd + individuo["Según su experiencia, ¿qué gestores de base de datos debe conocer un ingeniero en sistemas para laborar en una entidad bancaria? (Puede escoger más de una opción)"].split(";")
 
+    #Sistemas Operativos
+    so_usados = so_usados + individuo["Según su experiencia, ¿qué sistemas operativos debe saber utilizar un ingeniero en sistemas para poder laborar en una entidad bancaria?\xa0\xa0(Puede escoger más de una opción)"].split(";")
 
-"""
-    # Habilidades tecnicas
-    lenguajes_de_programacion.append([""])
-    uso_de_librerias.append([""])
-    uso_de_frameworks.append([""])
-    desa_app_web.append([""])
-    desa_app_escritorio.append([""])
-    desa_app_movil.append([""])
-    desa_embebidos.append([""])
-    metodologias_de_desarrollo.append([""])
-    ataques_informaticos.append([""])
-    buenas_practicas_de_seguridad.append([""])
-    protocolos_de_redes.append([""])
-    conocimientos_basico_redes.append([""])
-    operaciones_en_bases.append([""])
-    administracion_bases.append([""])
-"""
+    #Lenguajes de programación
+    lenguajes_usados = lenguajes_usados + individuo["Según su experiencia, ¿qué lenguajes de programación debe conocer un ingeniero en sistemas para poder laborar en una entidad bancaria?\xa0(Puede escoger más de una opción)"].split(";")
+
 
 ################ Habilidades Blandas ################
 
@@ -686,40 +657,14 @@ habilidades_set, habilidades_count = np.unique(habilidades_necesarias, return_co
 
 hab_pro = (habilidades_count / len(empleados_de_bancos)) * 100
 
-hab_df = pd.DataFrame({
-    'Habilidades': habilidades_set,
-    'Porcentaje': hab_pro
-    })
-hab_df = hab_df.drop(labels=0, axis=0)
-
-fig, ax = plt.subplots()
-ax.bar('Habilidades', 'Porcentaje', data=hab_df, color=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray', 'tab:green', 'tab:purple', 'tab:pink', 'm', 'tab:olive'])
-
-plt.tick_params(
-    axis='x',        
-    which='both',   
-    bottom=False,  
-    top=False,    
-    labelbottom=False)
-
-plt.title("Habilidades necesarias para trabajar en el sector")
-
-fontP = FontProperties()
-fontP.set_size('small')
-
-cmap = dict(zip(areas_df['Areas'].tolist(), ['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray', 'tab:green', 'tab:purple', 'tab:pink', 'm', 'tab:olive']))
-
-patches = [Patch(color=v, label=k) for k, v in cmap.items()]
-
-ax.yaxis.set_major_formatter(mtick.PercentFormatter())
-plt.legend(labels=hab_df['Habilidades'].tolist(), handles=patches, title='Habilidades', bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
-
-plt.savefig("./fig/habilidades_necesarias.png", dpi=None, facecolor='w', edgecolor='w',
-        orientation='portrait', format=None,
-        transparent=False, bbox_inches='tight', pad_inches=0.1,
-        metadata=None)
-plt.clf()
-
+make_bar(
+        data=habilidades_set,
+        por=hab_pro,
+        title="Habilidades necesarias para trabajar en el sector",
+        name="Habilidades",
+        file_name="./fig/habilidades_necesarias.png",
+        drop_df=True
+        )
 
 ############ Gestores de bases de datos usados ############
 gestores_bd = np.array(gestores_bd)
@@ -728,43 +673,48 @@ gestores_set, gestores_count = np.unique(gestores_bd, return_counts=True)
 
 gestores_pro = (gestores_count / len(empleados_de_bancos)) * 100
 
-gestores_df = pd.DataFrame({
-    'Gestores': gestores_set,
-    'Porcentaje': gestores_pro
-    })
-gestores_df = gestores_df.drop(labels=0, axis=0)
-
-fig, ax = plt.subplots()
-ax.bar('Gestores', 'Porcentaje', data=gestores_df, color=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray', 'tab:green', 'tab:purple', 'tab:pink', 'm', 'tab:olive'])
-
-plt.tick_params(
-    axis='x',        
-    which='both',   
-    bottom=False,  
-    top=False,    
-    labelbottom=False)
-
-plt.title("Gestores de bases de datos usados en el sector bancario")
-
-fontP = FontProperties()
-fontP.set_size('small')
-
-cmap = dict(zip(gestores_df['Gestores'].tolist(), ['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray', 'tab:green', 'tab:purple', 'tab:pink', 'm', 'tab:olive']))
-
-patches = [Patch(color=v, label=k) for k, v in cmap.items()]
-
-ax.yaxis.set_major_formatter(mtick.PercentFormatter())
-plt.legend(labels=gestores_df['Gestores'].tolist(), handles=patches, title='Gestores', bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
-
-plt.savefig("./fig/gestores_bd.png", dpi=None, facecolor='w', edgecolor='w',
-        orientation='portrait', format=None,
-        transparent=False, bbox_inches='tight', pad_inches=0.1,
-        metadata=None)
-plt.clf()
+make_bar(
+        data=gestores_set,
+        por=gestores_pro,
+        title="Gestores necesarios",
+        name="Gestores",
+        file_name="./fig/gestores_bd.png",
+        drop_df=True
+        )
 
 
+############ Sistemas operativos que saben usar los empleados ############
 
+so_usados = np.array(so_usados)
 
+so_set, so_count = np.unique(so_usados, return_counts=True)
+
+so_pro = (so_count / len(empleados_de_bancos)) * 100
+
+make_bar(
+        data=so_set,
+        por=so_pro,
+        title="Sistemas operativos",
+        name="SO",
+        file_name="./fig/so_usados.png",
+        drop_df=True
+        )
+############ Lenguajes de programación que saben usar los empleados ############
+
+lenguajes_usados = np.array(lenguajes_usados)
+
+so_set, so_count = np.unique(lenguajes_usados, return_counts=True)
+
+so_pro = (so_count / len(empleados_de_bancos)) * 100
+
+make_bar(
+        data=so_set,
+        por=so_pro,
+        title="Lenguajes de programación usados",
+        name="Lenguajes",
+        file_name="./fig/lenguajes_usados.png",
+        drop_df=True
+        )
 
 
 
