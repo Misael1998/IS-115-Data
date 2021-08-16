@@ -5,7 +5,7 @@ from matplotlib.font_manager import FontProperties
 from matplotlib.patches import Patch
 import pandas as pd
 
-def make_bar(data, por, title, name, file_name, drop_df=False):
+def make_bar(data, por, title, name, file_name, drop_df=False, range=False):
     df = pd.DataFrame({
         'Label': data,
         'Value': por
@@ -33,7 +33,10 @@ def make_bar(data, por, title, name, file_name, drop_df=False):
 
     patches = [Patch(color=v, label=k) for k, v in cmap.items()]
 
-    ax.yaxis.set_major_formatter(mtick.PercentFormatter())
+    if not range:
+        ax.yaxis.set_major_formatter(mtick.PercentFormatter())
+    else:
+        plt.ylim([0,5])
     plt.legend(labels=df['Label'].tolist(), handles=patches, title=name, bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
 
     plt.savefig(file_name, dpi=None, facecolor='w', edgecolor='w',

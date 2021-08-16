@@ -251,54 +251,26 @@ identificador_habilidades = ["H1","H2","H3","H4","H5","H6","H7","H8"]
 promedios_habilidades_es = [np.mean(trabajo_en_equipo_es), np.mean(liderazgo_es), np.mean(manejo_de_estres_es), np.mean(buena_comunicacion_es), np.mean(puntualidad_y_responsabilidad_es), np.mean(resolucion_de_problemas_es), np.mean(proactividad_es), np.mean(resolucion_de_problemas_es)]
 promedios_habilidades_bc = [np.mean(trabajo_en_equipo_bc), np.mean(liderazgo_bc), np.mean(manejo_de_estres_bc), np.mean(buena_comunicacion_bc), np.mean(puntualidad_y_responsabilidad_bc), np.mean(resolucion_de_problemas_bc), np.mean(proactividad_bc), np.mean(resolucion_de_problemas_bc)]
 
-habilidades_es_df = pd.DataFrame({
-    "Habilidades": [x.replace(" ", "\n") for x in nombre_habilidades],
-    "Identificador": identificador_habilidades,
-    "Promedios": promedios_habilidades_es
-    })
-
-habilidades_bc_df = pd.DataFrame({
-    "Habilidades": nombre_habilidades,
-    "Identificador": identificador_habilidades,
-    "Promedios": promedios_habilidades_bc
-    })
-
-
 # Grafica estudiantes
-plt.bar('Identificador', 'Promedios',data=habilidades_es_df, color=colores)
-plt.title("Importancia de Habilidades blandas que poseen los estudiantes de Ingeniería en Sistemas\n")
-plt.xlabel("Habilidad")
-plt.ylabel("Importancia")
-plt.ylim([0,5])
+make_bar(
+        data=nombre_habilidades,
+        por=promedios_habilidades_es,
+        title="Importancia de Habilidades blandas que poseen los estudiantes de Ingeniería en Sistemas\n",
+        file_name="./fig/habilidades_blandas_es.png",
+        range=True,
+        name="Habilidades"
+        )
 
-plt.savefig("./fig/habilidades_blandas_es.png", dpi=None, facecolor='w', edgecolor='w',
-        orientation='portrait', format=None,
-        transparent=False, bbox_inches='tight', pad_inches=0.1,
-        metadata=None)
-plt.clf()
 
 # Grafica empleados
-fig, ax = plt.subplots()
-ax.bar('Identificador', 'Promedios',data=habilidades_bc_df, color=colores)
-plt.title("Importancia de Habilidades blandas requeridas en el sector bancario\n")
-plt.xlabel("Habilidad")
-plt.ylabel("Importancia")
-plt.ylim([0,5])
-
-fontP = FontProperties()
-fontP.set_size('small')
-
-cmap = dict(zip(nombre_habilidades, colores))
-
-patches = [Patch(color=v, label=k) for k, v in cmap.items()]
-
-plt.legend(labels=nombre_habilidades, handles=patches, title='Habilidades', bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
-
-plt.savefig("./fig/habilidades_blandas_bc.png", dpi=None, facecolor='w', edgecolor='w',
-        orientation='portrait', format=None,
-        transparent=False, bbox_inches='tight', pad_inches=0.1,
-        metadata=None)
-plt.clf()
+make_bar(
+        data=nombre_habilidades,
+        por=promedios_habilidades_bc,
+        title="Importancia de Habilidades blandas requeridas en el sector bancario\n",
+        file_name="./fig/habilidades_blandas_bc.png",
+        range=True,
+        name="Habilidades"
+        )
 
 ############## Tecnologias y Frecuencia ##############
 
@@ -315,8 +287,18 @@ frecuencia_apr_es = (frecuencia_apr_es / len(estudiantes)) * 100
 # Frecuencia actualización
 fig, ax = plt.subplots()
 
-ax.pie(frecuencia_act_es, labels=fre_act_set_es, colors=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red'], autopct='%.0f%%')
+ax.pie(frecuencia_act_es, colors=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red'], autopct='%.0f%%')
 plt.title("Frecuencia de actualización de conocimientos técnicos \n de estudiantes por egresar de Ingeniería en Sistemas \n en la UNAH")
+
+fontP = FontProperties()
+fontP.set_size('small')
+
+cmap = dict(zip(fre_act_set_es, ['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red']))
+
+patches = [Patch(color=v, label=k) for k, v in cmap.items()]
+
+plt.legend(labels=fre_act_set_es.tolist(), handles=patches, title='Frecuencia', bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
+
 
 plt.savefig("./fig/actualizacion_de_conocimientos_es.png", dpi=None, facecolor='w', edgecolor='w',
         orientation='portrait', format=None,
@@ -327,8 +309,18 @@ plt.clf()
 # Frecuencia aprendizaje
 fig, ax = plt.subplots()
 
-ax.pie(frecuencia_apr_es, labels=fre_apr_set_es, colors=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red'], autopct='%.0f%%')
+ax.pie(frecuencia_apr_es, colors=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red'], autopct='%.0f%%')
 plt.title("Frecuencia de aprendizaje de nuevos conocimientos técnicos \n de estudiantes por egresar de Ingeniería en Sistemas \n en la UNAH")
+
+fontP = FontProperties()
+fontP.set_size('small')
+
+cmap = dict(zip(fre_apr_set_es, ['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red']))
+
+patches = [Patch(color=v, label=k) for k, v in cmap.items()]
+
+plt.legend(labels=fre_apr_set_es.tolist(), handles=patches, title='Frecuencia', bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
+
 
 plt.savefig("./fig/aprendizaje_de_conocimientos_es.png", dpi=None, facecolor='w', edgecolor='w',
         orientation='portrait', format=None,
@@ -350,24 +342,43 @@ frecuencia_apr_bc = (frecuencia_apr_bc / len(empleados_de_bancos)) * 100
 # Frecuencia actualización
 fig, ax = plt.subplots()
 
-ax.pie(frecuencia_act_bc, labels=fre_act_set_bc, colors=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red'], autopct='%.0f%%')
+ax.pie(frecuencia_act_bc, colors=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red'], autopct='%.0f%%')
 plt.title("Frecuencia de actualización de conocimientos técnicos \n de empleados del sector bancario")
+
+fontP = FontProperties()
+fontP.set_size('small')
+
+cmap = dict(zip(fre_act_set_bc, ['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red']))
+
+patches = [Patch(color=v, label=k) for k, v in cmap.items()]
+
+plt.legend(labels=fre_act_set_bc.tolist(), handles=patches, title='Frecuencia', bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
 
 plt.savefig("./fig/actualizacion_de_conocimientos_bc.png", dpi=None, facecolor='w', edgecolor='w',
         orientation='portrait', format=None,
-        transparent=False, bbox_inches=None, pad_inches=0.1,
+        transparent=False, bbox_inches='tight', pad_inches=0.1,
         metadata=None)
 plt.clf()
 
 # Frecuencia aprendizaje
 fig, ax = plt.subplots()
 
-ax.pie(frecuencia_apr_bc, labels=fre_apr_set_bc, colors=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red'], autopct='%.0f%%')
+ax.pie(frecuencia_apr_bc, colors=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red'], autopct='%.0f%%')
 plt.title("Frecuencia de aprendizaje de nuevos conocimientos técnicos \n de empleados del sector bancario")
+
+fontP = FontProperties()
+fontP.set_size('small')
+
+cmap = dict(zip(fre_apr_set_bc, ['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red']))
+
+patches = [Patch(color=v, label=k) for k, v in cmap.items()]
+
+plt.legend(labels=fre_apr_set_bc.tolist(), handles=patches, title='Frecuencia', bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
+
 
 plt.savefig("./fig/aprendizaje_de_conocimientos_bc.png", dpi=None, facecolor='w', edgecolor='w',
         orientation='portrait', format=None,
-        transparent=False, bbox_inches=None, pad_inches=0.1,
+        transparent=False, bbox_inches='tight', pad_inches=0.1,
         metadata=None)
 plt.clf()
 
@@ -383,9 +394,18 @@ interes_set, fre_interes = np.unique(interes_para_trabajar, return_counts=True)
 fre_interes = (fre_interes / len(estudiantes)) * 100
 
 fig, ax = plt.subplots()
-ax.pie(fre_interes, labels=interes_set, colors=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red'], autopct='%.0f%%' )
+ax.pie(fre_interes, colors=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red'], autopct='%.0f%%' )
 
 plt.title("Interes de los estudiantes en un empleo")
+
+fontP = FontProperties()
+fontP.set_size('small')
+
+cmap = dict(zip(interes_set, ['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red']))
+
+patches = [Patch(color=v, label=k) for k, v in cmap.items()]
+
+plt.legend(labels=interes_set.tolist(), handles=patches, title='Interes', bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
 
 plt.savefig("./fig/interes_estudiates_trabajo_banco.png", dpi=None, facecolor='w', edgecolor='w',
         orientation='portrait', format=None,
@@ -435,7 +455,7 @@ bancos_df = pd.DataFrame({
     'Porcentaje': fre_bancos
     })
 
-bancos_df.drop(labels=0, axis=0)
+bancos_df = bancos_df.drop(labels=0, axis=0)
 
 bancos_df = bancos_df.sort_values('Porcentaje', ascending=True)
 
@@ -809,7 +829,8 @@ make_bar(
         title="Lenguaes de Programación que los estudiantes dominan",
         name="Lenguajes",
         file_name="./fig/lenguajes_domi.png",
-        drop_df=True
+        drop_df=True,
+        range=True
         )
 
 ############ Patrones de diseño ############
@@ -848,7 +869,8 @@ make_bar(
         title="Gestores de bases de datos que dominan los estudiantes",
         name="Gestores",
         file_name="./fig/gestores_domi.png",
-        drop_df=True
+        drop_df=True,
+        range=True
         )
 
 ############ Diseño de bases de datos ############
