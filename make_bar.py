@@ -41,4 +41,5 @@ def make_bar(data, por, title, name, file_name, drop_df=False):
         transparent=False, bbox_inches='tight', pad_inches=0.1,
         metadata=None)
     plt.clf()
+    plt.close()
 

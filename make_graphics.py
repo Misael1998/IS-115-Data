@@ -43,6 +43,35 @@ conocimientos_tecnicos_generales = []
 bases_de_datos = []
 sistemas_operativos = []
 
+# Area de interes
+area_interes = []
+
+# Lneguajes de programación que dominan
+java = []
+csharp = []
+js = []
+python = []
+cpp = []
+php = []
+
+# Patrones de diseño
+patrones = []
+
+# Gestores de bases de datos
+oracle = []
+server = []
+mysql = []
+postgres = []
+mongo = []
+maria = []
+db2 = []
+
+# Diseño de bases
+bases_disenio = []
+
+# Sistemas Operativos que domina
+sistema_domi = []
+
 ############## Variables Bancos ##############
 
 # Variables habilidades blandas bancos
@@ -120,6 +149,35 @@ for individuo in estudiantes:
     conocimientos_tecnicos_generales = conocimientos_tecnicos_generales + individuo["¿Cómo ha adquirido sus conocimientos sobre los conceptos de la pregunta anterior?\xa0(Puede escoger más de una opción)"].split(";")
     bases_de_datos = bases_de_datos + individuo["¿Cómo ha adquirido sus conocimientos en los gestores de base de datos preguntados anteriormente?\xa0\xa0(Puede escoger más de una opción)"].split(";")
     sistemas_operativos = sistemas_operativos + individuo["¿Cómo ha adquirido sus conocimientos en los sistemas operativos de la pregunta anterior?\xa0(Puede escoger más de una opción)"].split(";")
+
+    # Area de interes
+    area_interes = area_interes + individuo["¿En cuáles de las siguientes áreas de Ingeniería en Sistemas tiene mayor interés?\xa0\xa0(Puede escoger más de una opción)"].split(";")
+
+    # lenguajes que domina
+    java.append(individuo["Java"])
+    csharp.append(individuo["C#"])
+    js.append(individuo["JavaScript"])
+    python.append(individuo["Python"])
+    cpp.append(individuo["C++"])
+    php.append(individuo["PHP"])
+
+    # Patrones de diseño
+    patrones = patrones + individuo["De los siguientes patrones de diseño de software seleccione cuáles conoce:\xa0\xa0(Puede escoger más de una opción)"].split(";")
+
+    # Gestores 
+    oracle.append(individuo["Oracle"])
+    server.append(individuo["SQL Server"])
+    mysql.append(individuo["MySQL"])
+    postgres.append(individuo["PostgreSQL"])
+    mongo.append(individuo["MongoDB"])
+    maria.append(individuo["MariaDB"])
+    db2.append(individuo["Db2"])
+
+    # Diseño bd
+    bases_disenio = bases_disenio + individuo["Al momento de diseñar una base de datos, ¿Cuáles de los siguientes principios utiliza?\xa0\xa0(Puede escoger más de una opción)"].split(";")
+
+    # Sistemas operativos
+    sistema_domi = sistema_domi + individuo["¿Cuáles de los siguientes sistemas operativos sabe usar?\xa0\xa0(Puede escoger más de una opción)"].split(";")
 
 
 ################ Datos de los empleados ################
@@ -716,11 +774,116 @@ make_bar(
         drop_df=True
         )
 
+############ Areas de interes para los estudiantes ############
 
+area_interes = np.array(area_interes)
 
+so_set, so_count = np.unique(area_interes, return_counts=True)
 
+so_pro = (so_count / len(estudiantes)) * 100
 
+make_bar(
+        data=so_set,
+        por=so_pro,
+        title="Areas de interes para los estudiantes",
+        name="Areas",
+        file_name="./fig/areas_interes.png",
+        drop_df=True
+        )
 
+############ Lenguajes de programación que dominan los estudiantes ############
+
+java = np.array(java)
+csharp = np.array(csharp)
+js = np.array(js)
+python = np.array(python)
+cpp = np.array(cpp)
+php = np.array(php)
+
+lenguajes = ["Java","C#","JavaScript","Python","C++", "PHP"]
+lenguajes_pro = [np.mean(java), np.mean(csharp), np.mean(js), np.mean(python), np.mean(cpp), np.mean(php)]
+
+make_bar(
+        data=lenguajes,
+        por=lenguajes_pro,
+        title="Lenguaes de Programación que los estudiantes dominan",
+        name="Lenguajes",
+        file_name="./fig/lenguajes_domi.png",
+        drop_df=True
+        )
+
+############ Patrones de diseño ############
+
+area_interes = np.array(patrones)
+
+so_set, so_count = np.unique(area_interes, return_counts=True)
+
+so_pro = (so_count / len(estudiantes)) * 100
+
+make_bar(
+        data=so_set,
+        por=so_pro,
+        title="Patrones de diseño que conocen los estudiantes",
+        name="Patrones",
+        file_name="./fig/patrones_disenio.png",
+        drop_df=True
+        )
+
+############ Gestores de bases de datos que dominan los estudiantes ############
+
+oracle = np.array(oracle)
+server = np.array(server)
+mysql = np.array(mysql)
+postgres = np.array(postgres)
+mongo = np.array(mongo)
+maria = np.array(maria)
+db2 = np.array(db2)
+
+lenguajes = ["Oracle","SQL Server","MySQL","PostgreSQL","MongoDB", "MariaDB", "DB2"]
+lenguajes_pro = [np.mean(oracle), np.mean(server), np.mean(mysql), np.mean(postgres), np.mean(mongo), np.mean(maria), np.mean(db2)]
+
+make_bar(
+        data=lenguajes,
+        por=lenguajes_pro,
+        title="Gestores de bases de datos que dominan los estudiantes",
+        name="Gestores",
+        file_name="./fig/gestores_domi.png",
+        drop_df=True
+        )
+
+############ Diseño de bases de datos ############
+
+area_interes = np.array(bases_disenio)
+
+so_set, so_count = np.unique(area_interes, return_counts=True)
+
+so_pro = (so_count / len(estudiantes)) * 100
+
+make_bar(
+        data=so_set,
+        por=so_pro,
+        title="Diseño de bases de datos",
+        name="Diseño",
+        file_name="./fig/bases_disenio.png",
+        drop_df=True
+        )
+
+############ Diseño de bases de datos ############
+
+area_interes = np.array(sistema_domi)
+
+so_set, so_count = np.unique(area_interes, return_counts=True)
+
+so_pro = (so_count / len(estudiantes)) * 100
+
+make_bar(
+        data=so_set,
+        por=so_pro,
+        title="Sistemas operativos que dominan los estudiantes",
+        name="Sistemas Operativos",
+        file_name="./fig/sistema_domi.png",
+        drop_df=True
+        )
 
 
 
