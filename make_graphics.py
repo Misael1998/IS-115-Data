@@ -83,6 +83,13 @@ operaciones_en_bases = []
 administracion_bases = []
 """
 
+# Habilidades tecnicas necesarias
+habilidades_necesarias = []
+
+
+# Gestores de bases de datos
+gestores_bd = []
+
 # Empleados con certificados
 empleados_crt = []
 certificados = []
@@ -161,6 +168,12 @@ for individuo in empleados_de_bancos:
 
     # Areas de desempeño
     areas_de_desempenio = areas_de_desempenio + individuo["¿En qué área se desempeña o desempeñó en el sector bancario?\xa0\xa0(Puede escoger más de una opción)"].split(";")
+
+    #Habilidades requeridas
+    habilidades_necesarias = habilidades_necesarias + individuo["¿Qué habilidades o requisitos necesitó para comenzar a laborar en una entidad bancaria?\xa0(Puede escoger más de una opción)"].split(";")
+
+    #Gestores de bases de datos
+    gestores_bd = gestores_bd + individuo["Según su experiencia, ¿qué gestores de base de datos debe conocer un ingeniero en sistemas para laborar en una entidad bancaria? (Puede escoger más de una opción)"].split(";")
 
 
 """
@@ -573,6 +586,7 @@ cmap = dict(zip(totales_df['Totales_adq'].tolist(), ['tab:blue', 'tab:cyan', 'ta
 
 patches = [Patch(color=v, label=k) for k, v in cmap.items()]
 
+ax.yaxis.set_major_formatter(mtick.PercentFormatter())
 plt.legend(labels=totales_df['Totales_adq'].tolist(), handles=patches, title='Adquisición', bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
 
 plt.savefig("./fig/totales_adq.png", dpi=None, facecolor='w', edgecolor='w',
@@ -614,6 +628,7 @@ cmap = dict(zip(certificados_df['Certificados'].tolist(), ['tab:blue', 'tab:cyan
 
 patches = [Patch(color=v, label=k) for k, v in cmap.items()]
 
+ax.yaxis.set_major_formatter(mtick.PercentFormatter())
 plt.legend(labels=certificados_df['Certificados'].tolist(), handles=patches, title='Certificados', bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
 
 plt.savefig("./fig/certificados.png", dpi=None, facecolor='w', edgecolor='w',
@@ -655,9 +670,93 @@ cmap = dict(zip(areas_df['Areas'].tolist(), ['tab:blue', 'tab:cyan', 'tab:orange
 
 patches = [Patch(color=v, label=k) for k, v in cmap.items()]
 
+ax.yaxis.set_major_formatter(mtick.PercentFormatter())
 plt.legend(labels=areas_df['Areas'].tolist(), handles=patches, title='Areas', bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
 
 plt.savefig("./fig/areas_de_desempenio.png", dpi=None, facecolor='w', edgecolor='w',
+        orientation='portrait', format=None,
+        transparent=False, bbox_inches='tight', pad_inches=0.1,
+        metadata=None)
+plt.clf()
+
+############ Habilidades necesarias ############
+habilidades_necesarias = np.array(habilidades_necesarias)
+
+habilidades_set, habilidades_count = np.unique(habilidades_necesarias, return_counts=True)
+
+hab_pro = (habilidades_count / len(empleados_de_bancos)) * 100
+
+hab_df = pd.DataFrame({
+    'Habilidades': habilidades_set,
+    'Porcentaje': hab_pro
+    })
+hab_df = hab_df.drop(labels=0, axis=0)
+
+fig, ax = plt.subplots()
+ax.bar('Habilidades', 'Porcentaje', data=hab_df, color=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray', 'tab:green', 'tab:purple', 'tab:pink', 'm', 'tab:olive'])
+
+plt.tick_params(
+    axis='x',        
+    which='both',   
+    bottom=False,  
+    top=False,    
+    labelbottom=False)
+
+plt.title("Habilidades necesarias para trabajar en el sector")
+
+fontP = FontProperties()
+fontP.set_size('small')
+
+cmap = dict(zip(areas_df['Areas'].tolist(), ['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray', 'tab:green', 'tab:purple', 'tab:pink', 'm', 'tab:olive']))
+
+patches = [Patch(color=v, label=k) for k, v in cmap.items()]
+
+ax.yaxis.set_major_formatter(mtick.PercentFormatter())
+plt.legend(labels=hab_df['Habilidades'].tolist(), handles=patches, title='Habilidades', bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
+
+plt.savefig("./fig/habilidades_necesarias.png", dpi=None, facecolor='w', edgecolor='w',
+        orientation='portrait', format=None,
+        transparent=False, bbox_inches='tight', pad_inches=0.1,
+        metadata=None)
+plt.clf()
+
+
+############ Gestores de bases de datos usados ############
+gestores_bd = np.array(gestores_bd)
+
+gestores_set, gestores_count = np.unique(gestores_bd, return_counts=True)
+
+gestores_pro = (gestores_count / len(empleados_de_bancos)) * 100
+
+gestores_df = pd.DataFrame({
+    'Gestores': gestores_set,
+    'Porcentaje': gestores_pro
+    })
+gestores_df = gestores_df.drop(labels=0, axis=0)
+
+fig, ax = plt.subplots()
+ax.bar('Gestores', 'Porcentaje', data=gestores_df, color=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray', 'tab:green', 'tab:purple', 'tab:pink', 'm', 'tab:olive'])
+
+plt.tick_params(
+    axis='x',        
+    which='both',   
+    bottom=False,  
+    top=False,    
+    labelbottom=False)
+
+plt.title("Gestores de bases de datos usados en el sector bancario")
+
+fontP = FontProperties()
+fontP.set_size('small')
+
+cmap = dict(zip(gestores_df['Gestores'].tolist(), ['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray', 'tab:green', 'tab:purple', 'tab:pink', 'm', 'tab:olive']))
+
+patches = [Patch(color=v, label=k) for k, v in cmap.items()]
+
+ax.yaxis.set_major_formatter(mtick.PercentFormatter())
+plt.legend(labels=gestores_df['Gestores'].tolist(), handles=patches, title='Gestores', bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
+
+plt.savefig("./fig/gestores_bd.png", dpi=None, facecolor='w', edgecolor='w',
         orientation='portrait', format=None,
         transparent=False, bbox_inches='tight', pad_inches=0.1,
         metadata=None)
