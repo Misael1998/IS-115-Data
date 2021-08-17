@@ -815,7 +815,6 @@ make_bar(
         title="Gestores de bases de datos que dominan los estudiantes",
         name="Gestores",
         file_name="./fig/gestores_domi.png",
-        drop_df=True,
         range=True,
         ylabel="Nivel de dominio"
         )
