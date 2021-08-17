@@ -744,8 +744,29 @@ python = np.array(python)
 cpp = np.array(cpp)
 php = np.array(php)
 
-lenguajes = ["Java","C#","JavaScript","Python","C++", "PHP"]
-lenguajes_pro = [np.mean(java), np.mean(csharp), np.mean(js), np.mean(python), np.mean(cpp), np.mean(php)]
+### Lenguajes obtenidos "a mano" de la opción de otros
+typescript = [0]*len(estudiantes)
+go = [0]*len(estudiantes)
+r = [0]*len(estudiantes)
+sh = [0]*len(estudiantes)
+
+typescript[0] = 4
+
+go[0] = 2
+go[1] = 3
+go[2] = 4
+
+r[0] = 3
+
+sh[0] = 2
+
+typescript = np.array(typescript)
+go = np.array(go)
+r = np.array(r)
+sh = np.array(sh)
+
+lenguajes = ["Java","C#","JavaScript","Python","C++", "PHP", "TypeScript", "GO", "R", "SH"]
+lenguajes_pro = [np.mean(java), np.mean(csharp), np.mean(js), np.mean(python), np.mean(cpp), np.mean(php), np.mean(typescript), np.mean(go), np.mean(r), np.mean(sh)]
 
 make_bar(
         data=lenguajes,

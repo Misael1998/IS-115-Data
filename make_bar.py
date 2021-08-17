@@ -48,6 +48,11 @@ def make_bar(data, por, title, name, file_name, drop_df=False, range=False, ylab
                 ha='center')
     else:
         plt.ylim([0,5])
+        for p in pps:
+            height = p.get_height()
+            ax.text(x=p.get_x() + p.get_width() / 2, y=height+.10,
+                s="{0:.1f}".format(height),
+                ha='center')
     plt.legend(labels=df['Label'].tolist(), handles=patches, title=name, bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
 
     plt.savefig(file_name, dpi=None, facecolor='w', edgecolor='w',
