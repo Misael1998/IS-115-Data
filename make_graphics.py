@@ -812,7 +812,7 @@ lenguajes_pro = [np.mean(oracle), np.mean(server), np.mean(mysql), np.mean(postg
 make_bar(
         data=lenguajes,
         por=lenguajes_pro,
-        title="Gestores de bases de datos que dominan los estudiantes",
+        title="Gestores de bases de datos que dominan los estudiantes\n",
         name="Gestores",
         file_name="./fig/gestores_domi.png",
         range=True,
