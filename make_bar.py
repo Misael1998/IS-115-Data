@@ -15,7 +15,7 @@ def make_bar(data, por, title, name, file_name, drop_df=False, range=False, ylab
         df = df.drop(labels=0, axis=0)
 
     fig, ax = plt.subplots()
-    pps = ax.bar('Label', 'Value', data=df, color=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray', 'tab:green', 'tab:purple', 'tab:pink', 'm', 'tab:olive','tab:brown', 'mediumseagreen','k'])
+    pps = ax.bar('Label', 'Value', data=df, color=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray', 'tab:green', 'tab:purple', 'tab:pink', 'm', 'tab:olive','tab:brown', 'mediumseagreen','k','#c6fc03'])
 
     if ylabel is not None:
         plt.ylabel(ylabel)
@@ -35,7 +35,7 @@ def make_bar(data, por, title, name, file_name, drop_df=False, range=False, ylab
     fontP = FontProperties()
     fontP.set_size('small')
 
-    cmap = dict(zip(df['Label'].tolist(), ['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray', 'tab:green', 'tab:purple', 'tab:pink', 'm', 'tab:olive','tab:brown', 'mediumseagreen','k']))
+    cmap = dict(zip(df['Label'].tolist(), ['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray', 'tab:green', 'tab:purple', 'tab:pink', 'm', 'tab:olive','tab:brown', 'mediumseagreen','k','#c6fc03']))
 
     patches = [Patch(color=v, label=k) for k, v in cmap.items()]
 

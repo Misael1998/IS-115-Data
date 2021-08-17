@@ -774,7 +774,6 @@ make_bar(
         title="Lenguaes de Programación que los estudiantes dominan",
         name="Lenguajes",
         file_name="./fig/lenguajes_domi.png",
-        drop_df=True,
         range=True,
         ylabel="Nivel de dominio"
         )
