@@ -258,7 +258,8 @@ make_bar(
         title="Importancia de Habilidades blandas que poseen los estudiantes de Ingeniería en Sistemas\n",
         file_name="./fig/habilidades_blandas_es.png",
         range=True,
-        name="Habilidades"
+        name="Habilidades",
+        ylabel="Nivel de importancia"
         )
 
 
@@ -269,7 +270,8 @@ make_bar(
         title="Importancia de Habilidades blandas requeridas en el sector bancario\n",
         file_name="./fig/habilidades_blandas_bc.png",
         range=True,
-        name="Habilidades"
+        name="Habilidades",
+        ylabel="Nivel de importancia"
         )
 
 ############## Tecnologias y Frecuencia ##############
@@ -425,26 +427,18 @@ centros_df = pd.DataFrame({
     'Porcentaje': fre_centros
     })
 
-centros_df = centros_df.sort_values('Porcentaje', ascending=True)
+centros_df = centros_df.sort_values('Porcentaje', ascending=False)
 
-fig, ax = plt.subplots()
+make_bar(
+        data=centros_df['Centros'].tolist(),
+        por=centros_df['Porcentaje'].tolist(),
+        title="Universidades en las que estudiaron los empleados",
+        name="Universidades",
+        file_name="./fig/centros_de_estudio.png",
+        ylabel="Porcentaje de población"
+        )
 
-ax.barh('Centros', 'Porcentaje', data=centros_df)
-plt.title("Universidades en las que estudiaron los empleados")
-ax.xaxis.set_major_formatter(mtick.PercentFormatter())
-
-plt.ylabel("Universidades")
-plt.xlabel("Porcentaje de empleados que estudiaron en X universidad")
-
-plt.savefig("./fig/centros_de_estudio.png", dpi=None, facecolor='w', edgecolor='w',
-        orientation='portrait', format=None,
-        transparent=False, bbox_inches='tight', pad_inches=0.1,
-        metadata=None)
-plt.clf()
-
-
-
-############ Centros de estudio de los empleados de bancos ############
+############ Centros de trabajo de los empleados de bancos ############
 bancos_laborados = np.array(bancos_laborados)
 bancos_set, fre_bancos = np.unique(bancos_laborados, return_counts=True)
 
@@ -457,22 +451,16 @@ bancos_df = pd.DataFrame({
 
 bancos_df = bancos_df.drop(labels=0, axis=0)
 
-bancos_df = bancos_df.sort_values('Porcentaje', ascending=True)
+bancos_df = bancos_df.sort_values('Porcentaje', ascending=False)
 
-fig, ax = plt.subplots()
-
-ax.barh('Bancos', 'Porcentaje', data=bancos_df)
-plt.title("Listado bancos")
-ax.xaxis.set_major_formatter(mtick.PercentFormatter())
-
-plt.ylabel("Bancos")
-plt.xlabel("Porcentaje de empleados que trabajaron en X banco")
-
-plt.savefig("./fig/bancos_laborados.png", dpi=None, facecolor='w', edgecolor='w',
-        orientation='portrait', format=None,
-        transparent=False, bbox_inches='tight', pad_inches=0.1,
-        metadata=None)
-plt.clf()
+make_bar(
+        data=bancos_df['Bancos'].tolist(),
+        por=bancos_df['Porcentaje'].tolist(),
+        title="Bancos en los que han trabajado los empleados",
+        name="Bancos",
+        file_name="./fig/bancos_laborados.png",
+        ylabel="Porcentaje de población"
+        )
 
 ############ Adquisición de conocimientos ############
 totales = []
@@ -616,34 +604,14 @@ plt.clf()
 
 
 ### Totales
-fig, ax = plt.subplots()
-ax.bar('Totales_adq', 'Porcentaje', data=totales_df, color=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray', 'tab:green', 'tab:purple', 'tab:pink', 'm'])
-
-plt.tick_params(
-    axis='x',        
-    which='both',   
-    bottom=False,  
-    top=False,    
-    labelbottom=False)
-
-plt.title("Adquisición de conocimientos tecnicos totales")
-
-fontP = FontProperties()
-fontP.set_size('small')
-
-cmap = dict(zip(totales_df['Totales_adq'].tolist(), ['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray', 'tab:green', 'tab:purple', 'tab:pink', 'm']))
-
-patches = [Patch(color=v, label=k) for k, v in cmap.items()]
-
-ax.yaxis.set_major_formatter(mtick.PercentFormatter())
-plt.legend(labels=totales_df['Totales_adq'].tolist(), handles=patches, title='Adquisición', bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
-
-plt.savefig("./fig/totales_adq.png", dpi=None, facecolor='w', edgecolor='w',
-        orientation='portrait', format=None,
-        transparent=False, bbox_inches='tight', pad_inches=0.1,
-        metadata=None)
-plt.clf()
-
+make_bar(
+        data=totales_df['Totales_adq'].tolist(),
+        por=totales_df['Porcentaje'].tolist(),
+        title="Adquisición de conocimientos tecnicos totales",
+        name="Adquisición",
+        file_name="./fig/totales_adq.png",
+        ylabel="Porcentaje de población"
+        )
 
 ############ Certificaciones de empleados ############
 certificados = np.array(certificados)
@@ -652,40 +620,15 @@ certificados_set, certificados_count = np.unique(certificados, return_counts=Tru
 
 certificados_pro = (certificados_count / len(empleados_crt)) * 100
 
-certificados_df = pd.DataFrame({
-    'Certificados': certificados_set,
-    'Porcentaje': certificados_pro
-    })
-certificados_df = certificados_df.drop(labels=0, axis=0)
-
-fig, ax = plt.subplots()
-ax.bar('Certificados', 'Porcentaje', data=certificados_df, color=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray', 'tab:green', 'tab:purple', 'tab:pink', 'm'])
-
-plt.tick_params(
-    axis='x',        
-    which='both',   
-    bottom=False,  
-    top=False,    
-    labelbottom=False)
-
-plt.title("Adquisición de conocimientos tecnicos totales")
-
-fontP = FontProperties()
-fontP.set_size('small')
-
-cmap = dict(zip(certificados_df['Certificados'].tolist(), ['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray', 'tab:green', 'tab:purple', 'tab:pink', 'm']))
-
-patches = [Patch(color=v, label=k) for k, v in cmap.items()]
-
-ax.yaxis.set_major_formatter(mtick.PercentFormatter())
-plt.legend(labels=certificados_df['Certificados'].tolist(), handles=patches, title='Certificados', bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
-
-plt.savefig("./fig/certificados.png", dpi=None, facecolor='w', edgecolor='w',
-        orientation='portrait', format=None,
-        transparent=False, bbox_inches='tight', pad_inches=0.1,
-        metadata=None)
-plt.clf()
-
+make_bar(
+        data=certificados_set,
+        por=certificados_pro,
+        title="Certificaciones de los empleados",
+        name="Certificados",
+        file_name="./fig/certificados.png",
+        drop_df=True,
+        ylabel="Porcentaje de población"
+        )
 
 ############ Areas de trabajo de empleados ############
 areas_de_desempenio = np.array(areas_de_desempenio)
@@ -694,39 +637,15 @@ areas_set, areas_count = np.unique(areas_de_desempenio, return_counts=True)
 
 areas_pro = (areas_count / len(empleados_de_bancos)) * 100
 
-areas_df = pd.DataFrame({
-    'Areas': areas_set,
-    'Porcentaje': areas_pro
-    })
-areas_df = areas_df.drop(labels=0, axis=0)
-
-fig, ax = plt.subplots()
-ax.bar('Areas', 'Porcentaje', data=areas_df, color=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray', 'tab:green', 'tab:purple', 'tab:pink', 'm'])
-
-plt.tick_params(
-    axis='x',        
-    which='both',   
-    bottom=False,  
-    top=False,    
-    labelbottom=False)
-
-plt.title("Areas de desempeño de empleados")
-
-fontP = FontProperties()
-fontP.set_size('small')
-
-cmap = dict(zip(areas_df['Areas'].tolist(), ['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray', 'tab:green', 'tab:purple', 'tab:pink', 'm']))
-
-patches = [Patch(color=v, label=k) for k, v in cmap.items()]
-
-ax.yaxis.set_major_formatter(mtick.PercentFormatter())
-plt.legend(labels=areas_df['Areas'].tolist(), handles=patches, title='Areas', bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
-
-plt.savefig("./fig/areas_de_desempenio.png", dpi=None, facecolor='w', edgecolor='w',
-        orientation='portrait', format=None,
-        transparent=False, bbox_inches='tight', pad_inches=0.1,
-        metadata=None)
-plt.clf()
+make_bar(
+        data=areas_set,
+        por=areas_pro,
+        title="Areas de desempeño de empleados",
+        name="Areas",
+        file_name="./fig/areas_de_desempenio.png",
+        drop_df=True,
+        ylabel="Porcentaje de población"
+        )
 
 ############ Habilidades necesarias ############
 habilidades_necesarias = np.array(habilidades_necesarias)
@@ -741,7 +660,8 @@ make_bar(
         title="Habilidades necesarias para trabajar en el sector",
         name="Habilidades",
         file_name="./fig/habilidades_necesarias.png",
-        drop_df=True
+        drop_df=True,
+        ylabel="Porcentaje de población"
         )
 
 ############ Gestores de bases de datos usados ############
@@ -757,7 +677,8 @@ make_bar(
         title="Gestores necesarios",
         name="Gestores",
         file_name="./fig/gestores_bd.png",
-        drop_df=True
+        drop_df=True,
+        ylabel="Porcentaje de población"
         )
 
 
@@ -775,7 +696,8 @@ make_bar(
         title="Sistemas operativos",
         name="SO",
         file_name="./fig/so_usados.png",
-        drop_df=True
+        drop_df=True,
+        ylabel="Porcentaje de población"
         )
 ############ Lenguajes de programación que saben usar los empleados ############
 
@@ -791,7 +713,8 @@ make_bar(
         title="Lenguajes de programación usados",
         name="Lenguajes",
         file_name="./fig/lenguajes_usados.png",
-        drop_df=True
+        drop_df=True,
+        ylabel="Porcentaje de población"
         )
 
 ############ Areas de interes para los estudiantes ############
@@ -808,7 +731,8 @@ make_bar(
         title="Areas de interes para los estudiantes",
         name="Areas",
         file_name="./fig/areas_interes.png",
-        drop_df=True
+        drop_df=True,
+        ylabel="Porcentaje de población"
         )
 
 ############ Lenguajes de programación que dominan los estudiantes ############
@@ -830,7 +754,8 @@ make_bar(
         name="Lenguajes",
         file_name="./fig/lenguajes_domi.png",
         drop_df=True,
-        range=True
+        range=True,
+        ylabel="Nivel de dominio"
         )
 
 ############ Patrones de diseño ############
@@ -847,7 +772,8 @@ make_bar(
         title="Patrones de diseño que conocen los estudiantes",
         name="Patrones",
         file_name="./fig/patrones_disenio.png",
-        drop_df=True
+        drop_df=True,
+        ylabel="Porcentaje de población"
         )
 
 ############ Gestores de bases de datos que dominan los estudiantes ############
@@ -870,7 +796,8 @@ make_bar(
         name="Gestores",
         file_name="./fig/gestores_domi.png",
         drop_df=True,
-        range=True
+        range=True,
+        ylabel="Nivel de dominio"
         )
 
 ############ Diseño de bases de datos ############
@@ -887,7 +814,8 @@ make_bar(
         title="Diseño de bases de datos",
         name="Diseño",
         file_name="./fig/bases_disenio.png",
-        drop_df=True
+        drop_df=True,
+        ylabel="Porcentaje de población"
         )
 
 ############ Diseño de bases de datos ############
@@ -904,7 +832,8 @@ make_bar(
         title="Sistemas operativos que dominan los estudiantes",
         name="Sistemas Operativos",
         file_name="./fig/sistema_domi.png",
-        drop_df=True
+        drop_df=True,
+        ylabel="Porcentaje de población"
         )
 
 

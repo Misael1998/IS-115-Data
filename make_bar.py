@@ -5,7 +5,7 @@ from matplotlib.font_manager import FontProperties
 from matplotlib.patches import Patch
 import pandas as pd
 
-def make_bar(data, por, title, name, file_name, drop_df=False, range=False):
+def make_bar(data, por, title, name, file_name, drop_df=False, range=False, ylabel=None, xlabel=None):
     df = pd.DataFrame({
         'Label': data,
         'Value': por
@@ -15,7 +15,13 @@ def make_bar(data, por, title, name, file_name, drop_df=False, range=False):
         df = df.drop(labels=0, axis=0)
 
     fig, ax = plt.subplots()
-    ax.bar('Label', 'Value', data=df, color=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray', 'tab:green', 'tab:purple', 'tab:pink', 'm', 'tab:olive','tab:brown', 'mediumseagreen','k'])
+    pps = ax.bar('Label', 'Value', data=df, color=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red', 'tab:gray', 'tab:green', 'tab:purple', 'tab:pink', 'm', 'tab:olive','tab:brown', 'mediumseagreen','k'])
+
+    if ylabel is not None:
+        plt.ylabel(ylabel)
+
+    if xlabel is not None:
+        plt.xlabel(xlabel)
 
     plt.tick_params(
         axis='x',        
@@ -35,6 +41,11 @@ def make_bar(data, por, title, name, file_name, drop_df=False, range=False):
 
     if not range:
         ax.yaxis.set_major_formatter(mtick.PercentFormatter())
+        for p in pps:
+            height = p.get_height()
+            ax.text(x=p.get_x() + p.get_width() / 2, y=height+.10,
+                s="{0:.1f}%".format(height),
+                ha='center')
     else:
         plt.ylim([0,5])
     plt.legend(labels=df['Label'].tolist(), handles=patches, title=name, bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
