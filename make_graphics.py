@@ -207,7 +207,7 @@ for individuo in empleados_de_bancos:
         empleados_crt.append(individuo)
         certificados = certificados + individuo["Indique en cuáles áreas se ha certificado:\xa0(Puede escoger más de una opción)"].split(";")
 
-    # Areas de desempeño
+    # Áreas de desempeño
     areas_de_desempenio = areas_de_desempenio + individuo["¿En qué área se desempeña o desempeñó en el sector bancario?\xa0\xa0(Puede escoger más de una opción)"].split(";")
 
     #Habilidades requeridas
@@ -630,7 +630,7 @@ make_bar(
         ylabel="Porcentaje de población"
         )
 
-############ Areas de trabajo de empleados ############
+############ Áreas de trabajo de empleados ############
 areas_de_desempenio = np.array(areas_de_desempenio)
 
 areas_set, areas_count = np.unique(areas_de_desempenio, return_counts=True)
@@ -640,8 +640,8 @@ areas_pro = (areas_count / len(empleados_de_bancos)) * 100
 make_bar(
         data=areas_set,
         por=areas_pro,
-        title="Areas de desempeño de empleados",
-        name="Areas",
+        title="Áreas de desempeño de empleados",
+        name="Áreas",
         file_name="./fig/areas_de_desempenio.png",
         drop_df=True,
         ylabel="Porcentaje de población"
@@ -717,7 +717,7 @@ make_bar(
         ylabel="Porcentaje de población"
         )
 
-############ Areas de interes para los estudiantes ############
+############ Áreas de interes para los estudiantes ############
 
 area_interes = np.array(area_interes)
 
@@ -728,8 +728,8 @@ so_pro = (so_count / len(estudiantes)) * 100
 make_bar(
         data=so_set,
         por=so_pro,
-        title="Areas de interes para los estudiantes",
-        name="Areas",
+        title="Áreas de interes para los estudiantes",
+        name="Áreas",
         file_name="./fig/areas_interes.png",
         drop_df=True,
         ylabel="Porcentaje de población"
