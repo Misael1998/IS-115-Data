@@ -33,7 +33,7 @@ respeto_a_direcencias_es = []
 fre_actualizacion_tec_conocidas_es = []
 fre_aprendizaje_nueva_tec_es = []
 
-# Interes en el sector banacario
+# Interés en el sector banacario
 interes_estudiates = []
 interes_para_trabajar = []
 
@@ -140,7 +140,7 @@ for individuo in estudiantes:
     fre_actualizacion_tec_conocidas_es.append(individuo["De las tecnologías que usted domina ¿qué tan frecuente actualiza su conocimiento sobre estas?"])
     fre_aprendizaje_nueva_tec_es.append(individuo["¿Qué tan frecuente aprende nuevas tecnologías?"])
 
-    #Interes en el sector bancario
+    #Interés en el sector bancario
     interes_estudiates.append(individuo["¿Qué tanto le interesa trabajar en el sector bancario?"])
     interes_para_trabajar.append(individuo["Al momento de buscar empleo ¿qué le interesa más?"])
 
@@ -385,11 +385,11 @@ plt.savefig("./fig/aprendizaje_de_conocimientos_bc.png", dpi=None, facecolor='w'
 plt.clf()
 
 
-############ Interes de los estudiantes en el sector banacario ############
+############ Interés de los estudiantes en el sector banacario ############
 interes_estudiates = np.array(interes_estudiates)
 
 
-############ Interes de los estudiantes para trabajar en el sector banacario ############
+############ Interés de los estudiantes para trabajar en el sector banacario ############
 interes_para_trabajar = np.array(interes_para_trabajar)
 interes_set, fre_interes = np.unique(interes_para_trabajar, return_counts=True) 
 
@@ -398,7 +398,7 @@ fre_interes = (fre_interes / len(estudiantes)) * 100
 fig, ax = plt.subplots()
 ax.pie(fre_interes, colors=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red'], autopct='%.0f%%' )
 
-plt.title("Interes de los estudiantes en un empleo")
+plt.title("Interés de los estudiantes en un empleo")
 
 fontP = FontProperties()
 fontP.set_size('small')
@@ -407,7 +407,7 @@ cmap = dict(zip(interes_set, ['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red']))
 
 patches = [Patch(color=v, label=k) for k, v in cmap.items()]
 
-plt.legend(labels=interes_set.tolist(), handles=patches, title='Interes', bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
+plt.legend(labels=interes_set.tolist(), handles=patches, title='Interés', bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
 
 plt.savefig("./fig/interes_estudiates_trabajo_banco.png", dpi=None, facecolor='w', edgecolor='w',
         orientation='portrait', format=None,
@@ -728,7 +728,7 @@ so_pro = (so_count / len(estudiantes)) * 100
 make_bar(
         data=so_set,
         por=so_pro,
-        title="Áreas de interes para los estudiantes",
+        title="Áreas de interés para los estudiantes",
         name="Áreas",
         file_name="./fig/areas_interes.png",
         drop_df=True,
