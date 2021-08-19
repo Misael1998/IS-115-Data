@@ -72,6 +72,9 @@ bases_disenio = []
 # Sistemas Operativos que domina
 sistema_domi = []
 
+# Interés para trabajar en el sector bancario
+interes_trabajar_en_el_sector = []
+
 ############## Variables Bancos ##############
 
 # Variables habilidades blandas bancos
@@ -179,6 +182,9 @@ for individuo in estudiantes:
     # Sistemas operativos
     sistema_domi = sistema_domi + individuo["¿Cuáles de los siguientes sistemas operativos sabe usar?\xa0\xa0(Puede escoger más de una opción)"].split(";")
 
+    # Interés para trabajar en el sector bancario
+    interes_trabajar_en_el_sector.append(individuo["¿Qué tanto le interesa trabajar en el sector bancario?"])
+
 
 ################ Datos de los empleados ################
 for individuo in empleados_de_bancos:
@@ -285,6 +291,31 @@ fre_apr_set_es, frecuencia_apr_es = np.unique(fre_aprendizaje_nueva_tec_es, retu
 
 frecuencia_act_es = (frecuencia_act_es / len(estudiantes)) * 100
 frecuencia_apr_es = (frecuencia_apr_es / len(estudiantes)) * 100
+
+interes_trabajar_en_el_sector = np.array(interes_trabajar_en_el_sector)
+interes_sec_set, interes_sec_por = np.unique(interes_trabajar_en_el_sector, return_counts=True)
+interes_sec_por = (interes_sec_por / len(estudiantes)) * 100
+
+# Interés para trabajar en el sector bancario
+fig, ax = plt.subplots()
+ax.pie(interes_sec_por, colors=['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red'], autopct='%.0f%%')
+plt.title("Interés que tienen los estudiantes para trabajar en el sector bancario")
+
+fontP = FontProperties()
+fontP.set_size('small')
+
+cmap = dict(zip(interes_sec_set, ['tab:blue', 'tab:cyan', 'tab:orange', 'tab:red']))
+
+patches = [Patch(color=v, label=k) for k, v in cmap.items()]
+
+plt.legend(labels=interes_sec_set.tolist(), handles=patches, title='Interés', bbox_to_anchor=(1.05, 1), loc='upper left', prop=fontP)
+
+
+plt.savefig("./fig/interes_trabajar_en_sector.png", dpi=None, facecolor='w', edgecolor='w',
+        orientation='portrait', format=None,
+        transparent=False, bbox_inches='tight', pad_inches=0.1,
+        metadata=None)
+plt.clf()
 
 # Frecuencia actualización
 fig, ax = plt.subplots()
